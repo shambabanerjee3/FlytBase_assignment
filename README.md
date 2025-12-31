@@ -26,10 +26,11 @@ project/
 └── Reflection_and_Justification.md
 How to Run
 
-# Open waypoints.py
+ Open waypoints.py
 
 Select a scenario:
 SCENARIO = 1   # 1–4
+Run the simulation:
 python main.py
 Key Features
 
