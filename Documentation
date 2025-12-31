@@ -1,0 +1,173 @@
+# main.py — Simulation & Visualization Engine
+
+"""
+main.py
+-------
+
+Purpose:
+--------
+Runs the 3D multi-drone simulation after strategic (pre-flight) deconfliction.
+Visualizes the motion of a primary drone and multiple secondary drones in shared
+airspace using Matplotlib.
+
+Responsibilities:
+-----------------
+- Initializes drone objects
+- Applies conflict-resolved waypoints
+- Simulates waypoint-following motion
+- Renders quadcopter-style drone models
+- Animates trajectories over time
+
+Key Concepts:
+-------------
+- Waypoint acceptance radius to avoid floating-point deadlock
+- Deterministic time-step simulation
+- Separation of visualization from conflict logic
+
+Dependencies:
+-------------
+- numpy
+- matplotlib
+- waypoints.py
+- conflict_handler.py
+
+Execution:
+----------
+$ python main.py
+"""
+# Drone3D Class
+
+"""
+conflict_handler.py
+-------------------
+
+Purpose:
+--------
+Implements strategic (pre-flight) deconfliction for multiple UAVs.
+Predicts trajectories, detects spatial-temporal conflicts, and applies
+resolution strategies before simulation begins.
+
+Design Philosophy:
+------------------
+- Deterministic and explainable logic
+- No reactive mid-flight changes
+- Primary drone has priority
+- Secondary drones are modified if conflicts exist
+
+Core Features:
+--------------
+- Trajectory prediction with time stamps
+- Spatial conflict checks (horizontal + vertical)
+- Temporal conflict alignment
+- Altitude-based conflict resolution
+
+Intended Use:
+-------------
+Called once before simulation starts.
+"""
+# Trajectory Prediction
+
+def predict_trajectory(start, waypoints, speed):
+    """
+    Predicts a future trajectory as time-stamped positions.
+
+    Parameters:
+    ----------
+    start : tuple(float, float, float)
+        Initial drone position.
+    waypoints : list[tuple]
+        Target waypoints to follow.
+    speed : float
+        Constant drone speed (m/s).
+
+    Returns:
+    --------
+    list[dict]:
+        Each element contains:
+        - 'time': simulation time (s)
+        - 'position': np.ndarray (x, y, z)
+    """
+# Conflict Detection
+def detect_conflicts(traj_primary, traj_secondary):
+    """
+    Detects spatial-temporal conflicts between two trajectories.
+
+    Conflict Conditions:
+    --------------------
+    - Horizontal distance < SAFETY_RADIUS
+    - Vertical distance < ALT_SEP
+    - Time difference <= TIME_STEP
+
+    Returns:
+    --------
+    list[dict]:
+        Detailed conflict reports including time and location.
+    """
+# Conflict Resolution
+
+def resolve_conflict(primary_wp, secondary_wp, strategy="altitude"):
+    """
+    Resolves detected conflicts using a predefined strategy.
+
+    Strategy:
+    ---------
+    altitude:
+        Applies a vertical offset to secondary drone waypoints.
+
+    Notes:
+    ------
+    - Primary drone path is never altered
+    - Resolution is applied pre-flight only
+    """
+
+# Main Conflict Handler
+
+def main_conflict_handler(primary_start, primary_wp, primary_speed, secondary_drones):
+    """
+    Entry point for strategic deconfliction.
+
+    Process:
+    --------
+    1. Predict primary trajectory
+    2. Predict each secondary trajectory
+    3. Detect conflicts
+    4. Resolve conflicts if required
+
+    Returns:
+    --------
+    tuple:
+        - resolved primary waypoints
+        - list of resolved secondary drone configurations
+    """
+
+# waypoints.py — Test Scenarios & Missions
+
+"""
+waypoints.py
+------------
+
+Purpose:
+--------
+Defines deterministic waypoint-based test scenarios for validating
+multi-drone strategic deconfliction.
+
+Design Rules:
+-------------
+- All drone IDs present in every scenario
+- Each drone has >= 3 waypoints
+- No waypoint equals start position
+- Supports conflict and non-conflict cases
+
+Usage:
+------
+Select scenario by changing SCENARIO variable.
+"""
+# Scenario Structure
+secondary_drones = [
+    {
+        "id": int,
+        "start": (x, y, z),
+        "speed": float,
+        "waypoints": [(x1,y1,z1), (x2,y2,z2), ...]
+    }
+]
